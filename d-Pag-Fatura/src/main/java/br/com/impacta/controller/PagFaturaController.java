@@ -15,6 +15,8 @@ import br.com.impacta.model.PagFatura;
 import br.com.impacta.proxy.ContaCorrenteProxy;
 import br.com.impacta.proxy.MovContaProxy;
 import br.com.impacta.repository.PagFaturaRepository;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 
 @RestController
 @RequestMapping("pag-fatura")
@@ -37,6 +39,9 @@ public class PagFaturaController {
 	
 	
 	@PutMapping("/pag_fat/{doc}")
+	@Retry(name ="default")
+	//@CircuitBreaker(name = "default" ,fallbackMethod = "investimento_fora")
+	@RateLimiter(name ="default")
 	public PagFatura pagFatura(@PathVariable("doc") String doc) {
 		
 		var fat = repository_fat.findByDoc(doc);

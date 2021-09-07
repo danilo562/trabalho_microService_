@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.impacta.model.CriaMovConta;
 import br.com.impacta.repository.MovContaRepository;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 
 @RestController
 @RequestMapping("mov-conta")
@@ -26,6 +28,9 @@ public class CriaMovContaController {
 	private MovContaRepository repository;
 	
 	@PostMapping("/criar_mov/{id}/{saldo}/{tipo}/{doc}/{acao}")
+	@Retry(name ="default")
+	//@CircuitBreaker(name = "default" ,fallbackMethod = "investimento_fora")
+	@RateLimiter(name ="default")
 	public CriaMovConta criaMovConta(@PathVariable(value = "id") Long id_cont,
     		@PathVariable(value = "saldo")  Double saldo,
     				@PathVariable("tipo") String tipo,
@@ -52,6 +57,9 @@ public class CriaMovContaController {
 	
 	
 	@GetMapping("/extrato_conta/{doc}")
+	@Retry(name ="default")
+	//@CircuitBreaker(name = "default" ,fallbackMethod = "investimento_fora")
+	@RateLimiter(name ="default")
 	public List<CriaMovConta> extratCont(@PathVariable("doc") String doc) {
 		
 		var mov = repository.findByDoc(doc);

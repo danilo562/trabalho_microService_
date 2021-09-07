@@ -1,10 +1,12 @@
 package br.com.impacta.controller;
 
+import java.lang.annotation.Retention;
+import java.lang.reflect.UndeclaredThrowableException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-
-
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
+
 import br.com.impacta.model.ContaCorrente;
 import br.com.impacta.model.ContaCorrenteXInvestimento;
 import br.com.impacta.proxy.InvestimentoProxy;
 import br.com.impacta.proxy.MovContaProxy;
 import br.com.impacta.repository.ContaCorrenteRepository;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 
 
 @RestController
@@ -39,8 +45,13 @@ public class ContaCorrenteController {
 	@Autowired
 	private MovContaProxy proxy_movConta;
 	
+	private Logger logger= LoggerFactory.getLogger(ContaCorrenteController.class);
+	
 	
 	@GetMapping(value = "/pesq_doc/{doc}")
+	@Retry(name ="default")
+	//@CircuitBreaker(name = "default" ,fallbackMethod = "investimento_fora")
+	@RateLimiter(name ="default")
 	public ContaCorrente getConta(
 			@PathVariable("doc") String doc
 			
@@ -60,8 +71,11 @@ public class ContaCorrenteController {
 	}
 	
 	@GetMapping(value = "/saldo_cont_inves/{doc}")
+	@Retry(name ="default")
+	//@CircuitBreaker(name = "default" ,fallbackMethod = "investimento_fora")
+	@RateLimiter(name ="default")
 	public ContaCorrenteXInvestimento getContXInvest(@PathVariable("doc") String doc) {
-		
+		logger.info("Request para getContXInvest recebido ");
 		var investimento = proxy_invst.getInvestimento(doc);
 		var conta = repository.findByDoc(doc);
 		
@@ -83,8 +97,16 @@ public class ContaCorrenteController {
 		
 	}
 	
+	
+	public String investimento_fora(Exception ex) {
+		return "Verifique o microServiço INVESTIMENTO provavelmente esta fora do ar.";
+	}
+	
 
 	  @PutMapping("/credito/{id}/{saldo}")
+	  @Retry(name ="default")
+		//@CircuitBreaker(name = "default" ,fallbackMethod = "investimento_fora")
+		@RateLimiter(name ="default")
 	    public ContaCorrente updatecredito(@PathVariable(value = "id") Long noteId,
 	    		@PathVariable(value = "saldo")  Double saldo
 	                                            ) {
@@ -104,6 +126,9 @@ public class ContaCorrenteController {
 	
 	  
 	  @PutMapping("/debito/{id}/{saldo}")
+	  @Retry(name ="default")
+		//@CircuitBreaker(name = "default" ,fallbackMethod = "investimento_fora")
+		@RateLimiter(name ="default")
 	    public ContaCorrente updateDebito(@PathVariable(value = "id") Long noteId,
 	    		@PathVariable(value = "saldo")  Double saldo
 	                                            ) {
@@ -123,7 +148,10 @@ public class ContaCorrenteController {
 	    }
 	  
 	  
-	  @PutMapping("/investir/{doc}/{saldo}")
+	    @PutMapping("/investir/{doc}/{saldo}")
+	    @Retry(name ="default")
+		//@CircuitBreaker(name = "default" ,fallbackMethod = "investimento_fora")
+		@RateLimiter(name ="default")
 	    public ContaCorrente investiValor(@PathVariable("doc") String doc,
 	    		@PathVariable(value = "saldo")  Double saldo
 	                                            ) {
