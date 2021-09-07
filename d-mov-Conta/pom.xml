@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.impacta</groupId>
-	<artifactId>pag-fatura</artifactId>
+	<artifactId>mov-conta</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>d-Pag-Fatura</name>
+	<name>d-mov-Conta</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>16</java.version>
@@ -30,10 +30,6 @@
 <!-- 			<groupId>org.springframework.cloud</groupId> -->
 <!-- 			<artifactId>spring-cloud-starter-config</artifactId> -->
 <!-- 		</dependency> -->
-        <dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
-		</dependency>
         <dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>

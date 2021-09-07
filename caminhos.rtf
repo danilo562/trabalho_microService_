@@ -1,7 +1,9 @@
 {\rtf1\ansi\ansicpg1252\cocoartf2580
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;\red25\green25\blue25;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c12941\c12941\c12941;\cssrgb\c100000\c100000\c100000;}
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fswiss\fcharset0 Helvetica-Bold;}
+{\colortbl;\red255\green255\blue255;\red25\green25\blue25;\red255\green255\blue255;\red25\green25\blue25;
+}
+{\*\expandedcolortbl;;\cssrgb\c12941\c12941\c12941;\cssrgb\c100000\c100000\c100000;\cssrgb\c12941\c12941\c12941;
+}
 \paperw11900\paperh16840\margl1440\margr1440\vieww25480\viewh13280\viewkind0
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
@@ -28,6 +30,17 @@ PUT\
 http://localhost:8765/conta-corrente/credito/2/989887\
 \
 \
+Debito em conta corrente\
+PUT\
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs28 \cf4 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec4 http://localhost:8765/conta-corrente/debito/3/3000
+\f0\b0\fs36 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \
+\
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
 INVESTIMENTO====================\
@@ -50,7 +63,40 @@ Retira saldo no investimento por Doc\
 PUT\
 http://localhost:8765/investimento/retira_saldo/3/100\
 \
+MOVIMENTACAO CONTA=============\
 \
+PARA CRIAR A MOV NA CONTA \{id_cont\}/\{saldo\}/\{tipo\}/\{doc\}/\{acho\}\
+POST\
+\pard\pardeftab720\partightenfactor0
+\cf4 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec4 http://localhost:8765/mov-conta/criar_mov/3/22/conta-corrente/3/pagamento_de_fatura
+\fs24 \
+\
+\
+
+\fs36 Para ver extrato por doc\
+GET\
+http://localhost:8765/mov-conta/extrato_conta/2
+\fs24 \
+
+\fs36 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \
+\
+PAGAMENTO DE FATURA=============\
+\
+Para fazer o pagamento da fatura por doc\
+PUT\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs28 \cf4 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec4 http://localhost:8765/pag-fatura/pag_fat/3
+\f0\b0\fs36 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \
 \
 Eureka\
 \

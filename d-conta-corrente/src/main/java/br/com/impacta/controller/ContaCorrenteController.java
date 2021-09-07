@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.impacta.model.ContaCorrente;
 import br.com.impacta.model.ContaCorrenteXInvestimento;
 import br.com.impacta.proxy.InvestimentoProxy;
+import br.com.impacta.proxy.MovContaProxy;
 import br.com.impacta.repository.ContaCorrenteRepository;
 
 
@@ -34,6 +35,9 @@ public class ContaCorrenteController {
 	
 	@Autowired
 	private InvestimentoProxy proxy_invst;
+	
+	@Autowired
+	private MovContaProxy proxy_movConta;
 	
 	
 	@GetMapping(value = "/pesq_doc/{doc}")
@@ -90,6 +94,9 @@ public class ContaCorrenteController {
 		  
 		  var novo_saldo = note.getSaldo() + saldo;
 	      note.setSaldo(novo_saldo);
+	      
+	      proxy_movConta.criaMovConta(note.getId(),note.getSaldo(),
+                  "credito",note.getDoc(), " Valor creditado em conta corrente ");
 
 	        ContaCorrente updatedNote = repository.save(note);
 	        return updatedNote;
@@ -108,6 +115,10 @@ public class ContaCorrenteController {
 	      note.setSaldo(novo_saldo);
 
 	        ContaCorrente updatedNote = repository.save(note);
+	        
+	        proxy_movConta.criaMovConta(note.getId(),note.getSaldo(),
+	                  "debito",note.getDoc()," Valor debitado de conta corrente ");
+	        
 	        return updatedNote;
 	    }
 	  
@@ -123,6 +134,12 @@ public class ContaCorrenteController {
 		  conta.setSaldo(novo_saldo);
 	      var updatedNote = repository.save(conta);
 	      var investimento = proxy_invst.setIncluirSaldo(doc,saldo);
+	      
+	      proxy_movConta.criaMovConta(conta.getId(),conta.getSaldo(),
+                  "debito",conta.getDoc(), " Valor debitado de conta corrente para investimento ");
+	      
+	      proxy_movConta.criaMovConta(investimento.getId(),investimento.getSaldo(),
+                  "credito",investimento.getDoc()," Valor creditado em conta investimento ");
 	      
 	        return updatedNote;
 	    }

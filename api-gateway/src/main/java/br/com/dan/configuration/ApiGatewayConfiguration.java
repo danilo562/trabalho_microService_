@@ -24,6 +24,10 @@ public class ApiGatewayConfiguration {
 						.uri("lb://conta-corrente"))
 				.route(p -> p.path("/investimento/**")
 						.uri("lb://investimento"))
+				.route(p -> p.path("/pag-fatura/**")
+						.uri("lb://pag-fatura"))
+				.route(p -> p.path("/mov-conta/**")
+						.uri("lb://mov-conta"))
 				.build();
 		
 	}

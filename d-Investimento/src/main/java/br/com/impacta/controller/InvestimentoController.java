@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.impacta.model.Investimento;
+import br.com.impacta.proxy.ContaCorrenteProxy;
+import br.com.impacta.proxy.MovContaProxy;
 import br.com.impacta.repository.investimentoRepository;
 
 @RestController
@@ -20,6 +22,12 @@ public class InvestimentoController {
 	
 	@Autowired
 	private investimentoRepository repository;
+	
+	@Autowired
+	private ContaCorrenteProxy proxy_contaCorrente;
+	
+	@Autowired
+	private MovContaProxy proxy_movConta;
 	
 	@GetMapping(value = "/pesq_inv_doc/{doc}")
 	public Investimento getInvestimento(@PathVariable("doc") String doc) {
@@ -87,6 +95,14 @@ public class InvestimentoController {
 		invest.setPorta(port);
 		
 		Investimento update = repository.save(invest);
+		
+		proxy_contaCorrente.updatecredito(update.getId(), saldo);
+		
+		 proxy_movConta.criaMovConta(update.getId(),saldo,
+                 "investimento",doc,"debitando saldo de investimento para credito em conta corrente");
+		
+	    proxy_movConta.criaMovConta(update.getId(),saldo,
+	    		                      "contaCorrente",doc,"Creditando saldo em contaCorrente retirando da conta de INVESTIMENTO");
 		
 		return update;
 	}
