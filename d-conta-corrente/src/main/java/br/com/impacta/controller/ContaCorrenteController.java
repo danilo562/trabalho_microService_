@@ -80,17 +80,50 @@ public class ContaCorrenteController {
 	}
 	
 
-	  @PutMapping("/atu_sald/{id}/{saldo}")
-	    public ContaCorrente updateNote(@PathVariable(value = "id") Long noteId,
+	  @PutMapping("/credito/{id}/{saldo}")
+	    public ContaCorrente updatecredito(@PathVariable(value = "id") Long noteId,
 	    		@PathVariable(value = "saldo")  Double saldo
 	                                            ) {
 
 		  ContaCorrente note = repository.findById(noteId).orElseThrow();
 
-	        note.setSaldo(saldo);
-	      
+		  
+		  var novo_saldo = note.getSaldo() + saldo;
+	      note.setSaldo(novo_saldo);
 
 	        ContaCorrente updatedNote = repository.save(note);
+	        return updatedNote;
+	    }
+	
+	  
+	  @PutMapping("/debito/{id}/{saldo}")
+	    public ContaCorrente updateDebito(@PathVariable(value = "id") Long noteId,
+	    		@PathVariable(value = "saldo")  Double saldo
+	                                            ) {
+
+		  ContaCorrente note = repository.findById(noteId).orElseThrow();
+
+		  
+		  var novo_saldo = note.getSaldo() - saldo;
+	      note.setSaldo(novo_saldo);
+
+	        ContaCorrente updatedNote = repository.save(note);
+	        return updatedNote;
+	    }
+	  
+	  
+	  @PutMapping("/investir/{doc}/{saldo}")
+	    public ContaCorrente investiValor(@PathVariable("doc") String doc,
+	    		@PathVariable(value = "saldo")  Double saldo
+	                                            ) {
+
+		  var conta = repository.findByDoc(doc);
+		  var novo_saldo = conta.getSaldo() - saldo;
+
+		  conta.setSaldo(novo_saldo);
+	      var updatedNote = repository.save(conta);
+	      var investimento = proxy_invst.setIncluirSaldo(doc,saldo);
+	      
 	        return updatedNote;
 	    }
 	

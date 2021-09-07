@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,6 +48,47 @@ public class InvestimentoController {
 		
 		return (Investimento) invest;
 		
+	}
+	
+	@PutMapping(value = "/incluir_saldo/{doc}/{saldo}")
+	public Investimento setIncluirSaldo(
+			@PathVariable(value = "doc") String doc,
+    		@PathVariable(value = "saldo")  Double saldo
+            ) {
+		
+		Investimento invest = repository.findByDoc(doc);
+		
+		var novo_saldo = invest.getSaldo() + saldo;
+		
+		invest.setSaldo(novo_saldo);
+        var port = environment.getProperty("local.server.port");
+	
+		invest.setPorta(port);
+		
+		Investimento update = repository.save(invest);
+		
+		return update;
+	}
+	
+	
+	@PutMapping(value = "/retira_saldo/{doc}/{saldo}")
+	public Investimento setRetiraSaldo(
+			@PathVariable(value = "doc") String doc,
+    		@PathVariable(value = "saldo")  Double saldo
+            ) {
+		
+		Investimento invest = repository.findByDoc(doc);
+		
+		var novo_saldo = invest.getSaldo() - saldo;
+		
+		invest.setSaldo(novo_saldo);
+        var port = environment.getProperty("local.server.port");
+		
+		invest.setPorta(port);
+		
+		Investimento update = repository.save(invest);
+		
+		return update;
 	}
 	
 
