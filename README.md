@@ -3,6 +3,8 @@ trabalho para microService MBA
 
 -Banco de dados utilizado Mysql com a database de nome projeto
 
+-Todas as Aplicaçoes foram criadas com SPRING-BOOT
+
 -O Eureka que esta com o nome do projeto naming-service roda na porta 8761
 
 -O API Gateway roda na porta 8765
