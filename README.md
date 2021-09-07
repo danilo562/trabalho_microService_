@@ -15,6 +15,8 @@ trabalho para microService MBA
 
 -A Pag-Fatura roda da porta 8300 até 8399
 
+-A mov-Conta roda da porta 8400 até 8399
+
 
 Ate o momento são esses links das chamadas das apis
 
@@ -37,6 +39,11 @@ PUT
 http://localhost:8765/conta-corrente/credito/2/989887
 
 
+Debito em conta corrente
+PUT
+http://localhost:8765/conta-corrente/debito/3/3000
+
+
 
 INVESTIMENTO====================
 Saldo investimento por doc
@@ -56,6 +63,25 @@ Retira saldo no investimento por Doc
 PUT
 http://localhost:8765/investimento/retira_saldo/3/100
 
+MOVIMENTACAO CONTA=============
+
+PARA CRIAR A MOV NA CONTA {id_cont}/{saldo}/{tipo}/{doc}/{acho}
+POST
+http://localhost:8765/mov-conta/criar_mov/3/22/conta-corrente/3/pagamento_de_fatura
+
+
+Para ver extrato por doc
+GET
+http://localhost:8765/mov-conta/extrato_conta/2
+
+
+
+PAGAMENTO DE FATURA=============
+
+Para fazer o pagamento da fatura por doc
+PUT
+
+http://localhost:8765/pag-fatura/pag_fat/3
 
 
 Eureka
