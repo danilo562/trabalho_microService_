@@ -28,6 +28,7 @@ public class OpenApiConfiguration {
     	   config.addGroup(name);
     	   GroupedOpenApi.builder().pathsToMatch("/"+name+"/**").group(name).build();
        });
+		
 				
 		
 		return new ArrayList<>();
