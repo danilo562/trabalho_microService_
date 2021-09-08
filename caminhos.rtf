@@ -34,12 +34,9 @@ Debito em conta corrente\
 PUT\
 \pard\pardeftab720\partightenfactor0
 
-\f1\b\fs28 \cf4 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec4 http://localhost:8765/conta-corrente/debito/3/3000
-\f0\b0\fs36 \cf2 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \
-\pard\pardeftab720\partightenfactor0
-\cf2 \
+\f1\b\fs28 \cf2 http://localhost:8765/conta-corrente/debito/3/3000
+\f0\b0\fs36 \cf2 \
+\
 \
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
@@ -67,37 +64,60 @@ MOVIMENTACAO CONTA=============\
 \
 PARA CRIAR A MOV NA CONTA \{id_cont\}/\{saldo\}/\{tipo\}/\{doc\}/\{acho\}\
 POST\
-\pard\pardeftab720\partightenfactor0
-\cf4 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec4 http://localhost:8765/mov-conta/criar_mov/3/22/conta-corrente/3/pagamento_de_fatura
-\fs24 \
+http://localhost:8765/mov-conta/criar_mov/3/22/conta-corrente/3/pagamento_de_fatura
+\fs24 \cf2 \
 \
 \
 
-\fs36 Para ver extrato por doc\
+\fs36 \cf2 Para ver extrato por doc\
 GET\
 http://localhost:8765/mov-conta/extrato_conta/2
-\fs24 \
+\fs24 \cf2 \
 
-\fs36 \cf2 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \
-\pard\pardeftab720\partightenfactor0
-\cf2 \
+\fs36 \cf2 \
+\
 \
 PAGAMENTO DE FATURA=============\
 \
 Para fazer o pagamento da fatura por doc\
 PUT\
 \
-\pard\pardeftab720\partightenfactor0
 
-\f1\b\fs28 \cf4 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec4 http://localhost:8765/pag-fatura/pag_fat/3
-\f0\b0\fs36 \cf2 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \
-\pard\pardeftab720\partightenfactor0
-\cf2 \
+\f1\b\fs28 \cf2 http://localhost:8765/pag-fatura/pag_fat/3
+\f0\b0\fs36 \cf2 \
+\
 \
 Eureka\
 \
-http://localhost:8761}
+http://localhost:8761\
+\
+\
+Swagger para ver as api\
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs24 \cf4 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec4 http://localhost:8100/v3/api-docs
+\fs36 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \
+\pard\pardeftab720\partightenfactor0
+
+\fs24 \cf4 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec4 http://localhost:8100/swagger-ui.html\
+\
+\pard\pardeftab720\partightenfactor0
+\cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 http://localhost:8200/v3/api-docs
+\fs36 \cf2 \
+
+\fs24 \cf2 http://localhost:8200/swagger-ui.html\
+\
+http://localhost:8300/v3/api-docs
+\fs36 \cf2 \
+
+\fs24 \cf2 http://localhost:8300/swagger-ui.html\
+\
+http://localhost:8400/v3/api-docs
+\fs36 \cf2 \
+
+\fs24 \cf2 http://localhost:8400/swagger-ui.html}

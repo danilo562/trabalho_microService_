@@ -27,8 +27,10 @@ import br.com.impacta.repository.ContaCorrenteRepository;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
-
+@Tag(name="ContaCorrente endpoint")
 @RestController
 @RequestMapping("conta-corrente")
 public class ContaCorrenteController {
@@ -47,7 +49,7 @@ public class ContaCorrenteController {
 	
 	private Logger logger= LoggerFactory.getLogger(ContaCorrenteController.class);
 	
-	
+	@Operation(summary = "Pesquisa conta pelo documento ")
 	@GetMapping(value = "/pesq_doc/{doc}")
 	@Retry(name ="default")
 	//@CircuitBreaker(name = "default" ,fallbackMethod = "investimento_fora")

@@ -12,4 +12,28 @@ spring:
       discovery:
         locator:
           enabled: true
-          lower-case-service-id: true
+      routes:
+      - id: conta-corrente
+        uri: lb://conta-corrente
+        predicates:
+        - Path=/conta-corrente/**
+      - id: investimento
+        uri: lb://investimento
+        predicates:
+        - Path=/investimento/**
+      - id: pag-fatura
+        uri: lb://pag-fatura
+        predicates:
+        - Path=/pag-fatura/**
+      - id: mov-conta
+        uri: lb://mov-conta
+        predicates:
+        - Path=/mov-conta/**
+      - id: openapi
+        uri: lb://api-gateway
+        predicates:
+        - Path=/v3/api-docs/**
+        filters:
+        - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+
+        

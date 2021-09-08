@@ -16,7 +16,9 @@ import br.com.impacta.model.CriaMovConta;
 import br.com.impacta.repository.MovContaRepository;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
+@Tag(name="mov-conta endpoint")
 @RestController
 @RequestMapping("mov-conta")
 public class CriaMovContaController {

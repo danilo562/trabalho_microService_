@@ -34,3 +34,7 @@ spring:
     schemas: projeto
     user: root
     password: admin123
+springdoc:
+  show-actuator: true
+  api-docs:
+    path: conta-corrente/v3/api-docs
