@@ -1,12 +1,76 @@
 version: '3.4'
 
 services:
+  zipkin-server:
+    image: openzipkin/zipkin:2.23.2
+    ports:
+      - 9411:9411
+    networks:
+      - danilo-networks
+      
   naming-server:
     image: danilosn562/naming-service:0.0.1-SNAPSHOT
     ports:
       - 8761:8761
     networks:
       - danilo-networks
+      
+  api-gateway:
+    image: danilosn562/api-gateway:0.0.1-SNAPSHOT
+    ports:
+      - 8765:8765
+    depends_on:
+      - naming-server
+    environment:
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka      
+    networks:
+      - danilo-networks
+      
+  banco-apli:
+    image: mysql:5.7.22
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+     TZ: America/Sao_paulo
+     MYSQL_ROOT_PASSWORD: admin123
+     MYSQL_USER: docker
+     MYSQL_PASSWORD: admin123
+     MYSQL_DATABASE: projeto
+     MYSQL_ROOT_HOST: '%'
+     MYSQL_TCP_PORT: 3308
+    ports:
+      - 3308:3308
+    expose:
+      - 3308
+    networks:
+      - danilo-networks
+      
+  conta-corrente:
+    image: danilosn562/conta-corrente
+    restart: always
+    build:
+      context: .
+      dockerfile: d-conta-corrente/Dockerfile
+    environment:
+      TZ: America/Sao_paulo
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.DATASOURCE.URL: jdbc:mysql://banco-apli:3308/projeto?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.DATASOURCE.USERNAME: root
+      SPRING.DATASOURCE.PASSWORD: admin123
+      SPRING.FLYWAY.URL: jdbc:mysql://banco-apli:3308/projeto?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.FLYWAY.USER: root
+      SPRING.FLYWAY.PASSWORD: admin123  
+    ports:
+      - 8100:8100
+    depends_on:
+      - naming-server
+      - banco-apli
+    
+    networks:
+      - danilo-networks    
+      
 networks:
   danilo-networks:
     driver: bridge
