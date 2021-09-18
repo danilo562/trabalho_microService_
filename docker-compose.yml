@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  naming-server:
+    image: danilosn562/naming-service:0.0.1-SNAPSHOT
+    ports:
+      - 8761:8761
+    networks:
+      - danilo-networks
+networks:
+  danilo-networks:
+    driver: bridge
