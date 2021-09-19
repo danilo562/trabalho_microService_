@@ -66,10 +66,81 @@ services:
       - 8100:8100
     depends_on:
       - naming-server
-      - banco-apli
-    
+      - banco-apli    
     networks:
       - danilo-networks    
+      
+  investimento:
+    image: danilosn562/investimento
+    restart: always
+    build:
+      context: .
+      dockerfile: d-Investimento/Dockerfile
+    environment:
+      TZ: America/Sao_paulo
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.DATASOURCE.URL: jdbc:mysql://banco-apli:3308/projeto?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.DATASOURCE.USERNAME: root
+      SPRING.DATASOURCE.PASSWORD: admin123
+      #SPRING.FLYWAY.URL: jdbc:mysql://banco-apli:3308/projeto?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      #SPRING.FLYWAY.USER: root
+      #SPRING.FLYWAY.PASSWORD: admin123  
+    ports:
+      - 8200:8200
+    depends_on:
+      - naming-server
+      - banco-apli    
+    networks:
+      - danilo-networks 
+      
+  mov-conta:
+    image: danilosn562/mov-conta
+    restart: always
+    build:
+      context: .
+      dockerfile: d-mov-Conta/Dockerfile
+    environment:
+      TZ: America/Sao_paulo
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.DATASOURCE.URL: jdbc:mysql://banco-apli:3308/projeto?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.DATASOURCE.USERNAME: root
+      SPRING.DATASOURCE.PASSWORD: admin123
+      #SPRING.FLYWAY.URL: jdbc:mysql://banco-apli:3308/projeto?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      #SPRING.FLYWAY.USER: root
+      #SPRING.FLYWAY.PASSWORD: admin123  
+    ports:
+      - 8400:8400
+    depends_on:
+      - naming-server
+      - banco-apli    
+    networks:
+      - danilo-networks           
+  
+  pag-fatura:
+    image: danilosn562/pag-fatura
+    restart: always
+    build:
+      context: .
+      dockerfile: d-Pag-Fatura/Dockerfile
+    environment:
+      TZ: America/Sao_paulo
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.DATASOURCE.URL: jdbc:mysql://banco-apli:3308/projeto?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      SPRING.DATASOURCE.USERNAME: root
+      SPRING.DATASOURCE.PASSWORD: admin123
+      #SPRING.FLYWAY.URL: jdbc:mysql://banco-apli:3308/projeto?useSSL=false&serverTimezone=UTC&enabledTLSProtocols=TLSv1.2
+      #SPRING.FLYWAY.USER: root
+      #SPRING.FLYWAY.PASSWORD: admin123  
+    ports:
+      - 8300:8300
+    depends_on:
+      - naming-server
+      - banco-apli    
+    networks:
+      - danilo-networks 
       
 networks:
   danilo-networks:
