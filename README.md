@@ -9,6 +9,8 @@ trabalho para microService MBA
 
 -O API Gateway roda na porta 8765
 
+-O Zipkin roda na porta 9411
+
 -A conta corrente roda da porta 8100 e vai ate 8199
 
 -A investimento roda da porta 8200 e vai até 8299
@@ -16,6 +18,7 @@ trabalho para microService MBA
 -A Pag-Fatura roda da porta 8300 até 8399
 
 -A mov-Conta roda da porta 8400 até 8399
+
 
 
 Documentaçao das apis
