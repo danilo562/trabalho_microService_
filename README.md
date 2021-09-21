@@ -11,6 +11,8 @@ trabalho para microService MBA
 
 -O Zipkin roda na porta 9411
 
+-O RabbitMq roda na porta 15672  usuario e senha guest
+
 -A conta corrente roda da porta 8100 e vai ate 8199
 
 -A investimento roda da porta 8200 e vai até 8299
@@ -31,3 +33,11 @@ http://localhost:8200/swagger-ui.html
 http://localhost:8300/swagger-ui.html
 
 http://localhost:8400/swagger-ui.html
+
+
+
+quando clonar o projeto construir os JAR.
+
+comando: mvn clean package 
+
+ou dar um build no maven colocando o comando spring-boot:build-image
