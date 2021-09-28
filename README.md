@@ -41,3 +41,6 @@ quando clonar o projeto construir os JAR.
 comando: mvn clean package 
 
 ou dar um build no maven colocando o comando spring-boot:build-image
+
+
+depois para rodar tudo ir na rais de onde esta o projeto e executar o comando docker-compose up
